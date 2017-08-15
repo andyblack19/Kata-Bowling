@@ -31,5 +31,6 @@ namespace Kata_Bowling
         public bool IsSpare() => !IsStrike() && Score() == 10;
         public bool IsStrike() => FirstRoll == 10;
         public bool IsComplete() => IsStrike() || SecondRoll.HasValue;
+        public bool IsFinalFrame() => Number == 10;
     }
 }

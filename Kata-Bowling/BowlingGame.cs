@@ -16,17 +16,12 @@ namespace Kata_Bowling
 
         public void Roll(int pins)
         {
-            var currentFrame = _frames.Single(x => x.Number == _currentFrameNumber);
+            var frame = GetCurrentFrame();
 
-            currentFrame.AddScore(pins);
+            frame.AddScore(pins);
 
-            if (currentFrame.IsComplete() && _currentFrameNumber < 10)
+            if (frame.IsComplete() && !frame.IsFinalFrame())
                 MoveToNextFrame();
-        }
-
-        private void MoveToNextFrame()
-        {
-            _currentFrameNumber += 1;
         }
 
         public int Score()
@@ -35,18 +30,32 @@ namespace Kata_Bowling
             foreach (var frame in _frames)
             {
                 score += frame.Score();
-                if (frame.IsSpare() && frame.Number < 10)
-                {
-                    var nextFrame = _frames[_frames.IndexOf(frame) + 1];
-                    score += nextFrame?.FirstRoll ?? 0;
-                }
-                if (frame.IsStrike() && frame.Number < 10)
-                {
-                    var nextFrame = _frames[_frames.IndexOf(frame) + 1];
-                    score += nextFrame.Score();
-                }
+
+                if (frame.IsFinalFrame()) continue;
+
+                if (frame.IsSpare() || frame.IsStrike())
+                    score += GetBonusScore(frame);
             }
             return score;
         }
+
+        private int GetBonusScore(Frame frame)
+        {
+            if (frame.IsSpare())
+                return GetNextFrame(frame).FirstRoll.GetValueOrDefault();
+            
+            if (frame.IsStrike())
+                return GetNextFrame(frame).Score();
+            
+            return 0;
+        }
+
+        private void MoveToNextFrame()
+        {
+            _currentFrameNumber += 1;
+        }
+
+        private Frame GetCurrentFrame() => _frames.Single(x => x.Number == _currentFrameNumber);
+        private Frame GetNextFrame(Frame frame) => _frames.Single(x => x.Number == frame.Number + 1);
     }
 }
