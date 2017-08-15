@@ -18,9 +18,9 @@ namespace Kata_Bowling
         {
             var currentFrame = _frames.Single(x => x.Number == _currentFrameNumber);
 
-           currentFrame.AddScore(pins);
+            currentFrame.AddScore(pins);
 
-            if (currentFrame.IsComplete())
+            if (currentFrame.IsComplete() && _currentFrameNumber < 10)
                 MoveToNextFrame();
         }
 
@@ -35,7 +35,7 @@ namespace Kata_Bowling
             foreach (var frame in _frames)
             {
                 score += frame.Score();
-                if (frame.IsSpare())
+                if (frame.IsSpare() && frame.Number < 10)
                 {
                     var nextFrame = _frames[_frames.IndexOf(frame) + 1];
                     score += nextFrame?.FirstRoll ?? 0;

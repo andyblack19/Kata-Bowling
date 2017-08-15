@@ -60,5 +60,16 @@ namespace Kata_Bowling
             RollMany(game, 14, 0);
             Assert.That(game.Score(), Is.EqualTo(38));
         }
+
+        [Test]
+        public void Rolling_a_spare_in_tenth_frame_gives_bonus_roll()
+        {
+            var game = new BowlingGame();
+            RollMany(game, 18, 0);
+            game.Roll(5);
+            game.Roll(5);
+            game.Roll(1);
+            Assert.That(game.Score(), Is.EqualTo(11));
+        }
     }
 }
