@@ -20,6 +20,24 @@ namespace Kata_Bowling
             Assert.That(game.Score(), Is.EqualTo(20));
         }
 
+        [Test]
+        public void Rolling_a_spare_gives_next_roll_as_bonus()
+        {
+            var game = new BowlingGame();
+            game.Roll(5);
+            game.Roll(5);
+            game.Roll(1);
+            game.Roll(1);
+            RollMany(game, 16, 1);
+            Assert.That(game.Score(), Is.EqualTo(29));
+        }
+
+        private static void RollMany(BowlingGame game, int times, int pinsHit)
+        {
+            for (var i = 0; i < times; i++)
+                game.Roll(pinsHit);
+        }
+
         private static void RollAll(BowlingGame game, int pinsHit)
         {
             for (var i = 0; i < 20; i++)
