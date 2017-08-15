@@ -17,17 +17,11 @@ namespace Kata_Bowling
         public void Roll(int pins)
         {
             var currentFrame = _frames.Single(x => x.Number == _currentFrameNumber);
-            if (currentFrame.FirstRoll.HasValue)
-            {
-                currentFrame.SecondRoll = pins;
+
+           currentFrame.AddScore(pins);
+
+            if (currentFrame.IsComplete())
                 MoveToNextFrame();
-            }
-            else
-            {
-                currentFrame.FirstRoll = pins;
-                if (pins == 10)
-                    MoveToNextFrame();
-            }
         }
 
         private void MoveToNextFrame()
