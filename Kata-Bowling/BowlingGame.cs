@@ -25,6 +25,8 @@ namespace Kata_Bowling
             else
             {
                 currentFrame.FirstRoll = pins;
+                if (pins == 10)
+                    MoveToNextFrame();
             }
         }
 
@@ -43,6 +45,11 @@ namespace Kata_Bowling
                 {
                     var nextFrame = _frames[_frames.IndexOf(frame) + 1];
                     score += nextFrame?.FirstRoll ?? 0;
+                }
+                if (frame.IsStrike())
+                {
+                    var nextFrame = _frames[_frames.IndexOf(frame) + 1];
+                    score += nextFrame.Score();
                 }
             }
             return score;

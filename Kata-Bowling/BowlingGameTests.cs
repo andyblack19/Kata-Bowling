@@ -8,7 +8,7 @@ namespace Kata_Bowling
         public void Game_score_is_zero_when_no_pins_hit()
         {
             var game = new BowlingGame();
-            RollAll(game, 0);
+            RollMany(game, 20, 0);
             Assert.That(game.Score(), Is.EqualTo(0));
         }
 
@@ -16,7 +16,7 @@ namespace Kata_Bowling
         public void Game_score_is_twenty_when_1_pin_hit_every_roll()
         {
             var game = new BowlingGame();
-            RollAll(game, 1);
+            RollMany(game, 20, 1);
             Assert.That(game.Score(), Is.EqualTo(20));
         }
 
@@ -28,8 +28,8 @@ namespace Kata_Bowling
             game.Roll(5);
             game.Roll(1);
             game.Roll(1);
-            RollMany(game, 16, 1);
-            Assert.That(game.Score(), Is.EqualTo(29));
+            RollMany(game, 16, 0);
+            Assert.That(game.Score(), Is.EqualTo(13));
         }
 
         private static void RollMany(BowlingGame game, int times, int pinsHit)
@@ -38,10 +38,15 @@ namespace Kata_Bowling
                 game.Roll(pinsHit);
         }
 
-        private static void RollAll(BowlingGame game, int pinsHit)
+        [Test]
+        public void Rolling_a_strike_gives_next_2_rolls_in_next_frame_as_bonus()
         {
-            for (var i = 0; i < 20; i++)
-                game.Roll(pinsHit);
+            var game = new BowlingGame();
+            game.Roll(10);
+            game.Roll(3);
+            game.Roll(1);
+            RollMany(game, 16, 0);
+            Assert.That(game.Score(), Is.EqualTo(18));
         }
     }
 }

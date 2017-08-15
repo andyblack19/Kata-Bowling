@@ -7,6 +7,7 @@ namespace Kata_Bowling
         public int? SecondRoll { get; set; }
 
         public int Score() => FirstRoll.GetValueOrDefault() + SecondRoll.GetValueOrDefault();
-        public bool IsSpare() => Score() == 10;
+        public bool IsSpare() => !IsStrike() && Score() == 10;
+        public bool IsStrike() => FirstRoll == 10;
     }
 }
