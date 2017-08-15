@@ -71,5 +71,27 @@ namespace Kata_Bowling
             game.Roll(1);
             Assert.That(game.Score(), Is.EqualTo(11));
         }
+
+        [Test]
+        public void Rolling_a_strike_in_tenth_frame_gives_bonus_roll()
+        {
+            var game = new BowlingGame();
+            RollMany(game, 18, 0);
+            game.Roll(10);
+            game.Roll(1);
+            game.Roll(1);
+            Assert.That(game.Score(), Is.EqualTo(12));
+        }
+
+        [Test]
+        public void Rolling_2_strikes_in_tenth_frame_gives_bonus_roll()
+        {
+            var game = new BowlingGame();
+            RollMany(game, 18, 0);
+            game.Roll(10);
+            game.Roll(10);
+            game.Roll(10);
+            Assert.That(game.Score(), Is.EqualTo(30));
+        }
     }
 }

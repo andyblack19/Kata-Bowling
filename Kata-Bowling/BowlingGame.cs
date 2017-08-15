@@ -40,7 +40,7 @@ namespace Kata_Bowling
                     var nextFrame = _frames[_frames.IndexOf(frame) + 1];
                     score += nextFrame?.FirstRoll ?? 0;
                 }
-                if (frame.IsStrike())
+                if (frame.IsStrike() && frame.Number < 10)
                 {
                     var nextFrame = _frames[_frames.IndexOf(frame) + 1];
                     score += nextFrame.Score();
