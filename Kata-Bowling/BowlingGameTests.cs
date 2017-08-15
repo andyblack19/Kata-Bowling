@@ -4,6 +4,12 @@ namespace Kata_Bowling
 {
     public class BowlingGameTests
     {
+        private static void RollMany(BowlingGame game, int times, int pinsHit)
+        {
+            for (var i = 0; i < times; i++)
+                game.Roll(pinsHit);
+        }
+
         [Test]
         public void Game_score_is_zero_when_no_pins_hit()
         {
@@ -32,12 +38,6 @@ namespace Kata_Bowling
             Assert.That(game.Score(), Is.EqualTo(13));
         }
 
-        private static void RollMany(BowlingGame game, int times, int pinsHit)
-        {
-            for (var i = 0; i < times; i++)
-                game.Roll(pinsHit);
-        }
-
         [Test]
         public void Rolling_a_strike_gives_next_2_rolls_in_next_frame_as_bonus()
         {
@@ -47,6 +47,18 @@ namespace Kata_Bowling
             game.Roll(1);
             RollMany(game, 16, 0);
             Assert.That(game.Score(), Is.EqualTo(18));
+        }
+
+        [Test]
+        public void Rolling_2_strikes_gives_next_2_rolls_as_bonus()
+        {
+            var game = new BowlingGame();
+            game.Roll(10);
+            game.Roll(10);
+            game.Roll(3);
+            game.Roll(1);
+            RollMany(game, 14, 0);
+            Assert.That(game.Score(), Is.EqualTo(38));
         }
     }
 }
