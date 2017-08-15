@@ -18,16 +18,4 @@ namespace Kata_Bowling
                 game.Roll(0);
         }
     }
-
-    public class BowlingGame
-    {
-        public void Roll(int pins)
-        {
-        }
-
-        public int Score()
-        {
-            return 0;
-        }
-    }
 }
